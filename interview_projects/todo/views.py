@@ -2,7 +2,7 @@ from django.shortcuts import redirect, get_object_or_404, render
 from django.http import HttpResponse
 from django.views.generic import ListView
 from todo.models import TodoList, Todo
-# Create your views here.
+from .forms import TodoForm
 
 class IndexView(ListView):
     model = TodoList
@@ -27,13 +27,12 @@ def delete_todo(request, todo_id):
 
 def add_todo(request):
     if(request.method == 'POST'):
-        title = request.POST.get('title')
-        todo_list_id = request.POST.get('todo_list_id')
-        todo_list = get_object_or_404(TodoList, id=todo_list_id)
-        Todo.objects.create(title=title, todo_list=todo_list)
+        form = TodoForm(request.POST)
+        if form.is_valid():
+           form.save()
         return redirect('index')
     
 def add_todo_page(request):
     if(request.method == 'GET'):
-        todo_lists = TodoList.objects.all()
-        return render(request, 'todo/add.html', {'todo_lists': todo_lists})
+        form = TodoForm()
+        return render(request, 'todo/add.html', {'form': form})
