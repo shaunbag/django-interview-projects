@@ -1,0 +1,33 @@
+{% extends "finance/index.html" %}
+
+{% block content %}
+
+    <h2>My Finances</h2>
+
+    <p>My Total Balance: {{ total }}</p>
+    <p>Balance after expenditures: {{ remaining }}</p>
+    <div class="add-container">
+        <form action="{% url 'add_expenditure' %}" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Add Expenditure</button>
+        </form>
+    </div>
+    <div class="container">
+    <ul>
+        {% for expenditure in expenditures%}
+            <li>
+                <p>{{expenditure.title}}</p>
+                <p>{{expenditure.description}}</p>
+                <p>{{expenditure.cost}}</p>
+                <form action="{% url 'delete_expenditure' expenditure.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">
+                        DELETE
+                    </button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
