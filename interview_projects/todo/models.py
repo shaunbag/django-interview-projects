@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 
+
 # Create your models here.
 class TodoList(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -10,6 +11,7 @@ class TodoList(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Todo(models.Model):
     title = models.CharField(max_length=255)

@@ -4,6 +4,7 @@ from .models import UserBudget, Expenditure
 from .forms import ExpenditureForm
 # Create your views here.
 
+
 def index(request):
     template = 'finance/index.html'
     return render(request, template)
@@ -19,16 +20,16 @@ def finance_view(request):
     return render(request, template, {"total" : budget.total, "form": form, "expenditures": expenditures, "remaining": remaining})
 
 
-def add_expenditure(reuqest):
-    if(reuqest.method == 'POST'):
-        form = ExpenditureForm(reuqest.POST)
+def add_expenditure(request):
+    if request.method == 'POST':
+        form = ExpenditureForm(request.POST)
         if form.is_valid():
             form.save()
         return redirect('index')        
 
 
 def delete_expenditure(request, item_id):
-    if(request.method == "POST"):
+    if request.method == "POST":
         item = get_object_or_404(Expenditure, id=item_id)
         item.delete()
         return redirect('index')
