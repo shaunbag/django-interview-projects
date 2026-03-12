@@ -35,7 +35,6 @@ def add_todo(request):
 
 
 @require_http_methods(['GET'])
-def add_todo_page(request):
-    if request.method == 'GET':
-        form = TodoForm()
-        return render(request, 'todo/add.html', {'form': form})
+def add_todo_page(request): 
+    form = TodoForm()
+    return render(request, 'todo/add.html', {'form': form})
