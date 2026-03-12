@@ -1,6 +1,7 @@
 from django import forms
 from .models import Todo, TodoList
 
+
 class TodoForm(forms.ModelForm):
     class Meta:
         model = Todo
